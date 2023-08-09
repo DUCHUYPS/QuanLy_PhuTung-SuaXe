@@ -1,0 +1,168 @@
+﻿@model IEnumerable<ShopOnlineConnection.GioHang>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<h1>Phiếu Đặt Hàng : </h1>
+<style>
+body1 {
+  font-family: Arial;
+  font-size: 17px;
+  padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.row1 {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-251 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-501 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-751 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-251,
+.col-501,
+.col-751 {
+  padding: 0 16px;
+}
+
+.container1 {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label1 {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-top:21px;
+    margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn1 {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn1:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: black;
+  font-size:25px;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+</style>
+@*@foreach (var item in Model)
+    {
+        // từ bên shop.details . Gửi ma san pham , ten san pham va gia san pham
+        // tu db lay len so luong . soluong * gia ra tien . Cong tat ca tien ra tong tien
+        <div class="row">
+            <div class="product well">
+                <div class="col-md-3">
+                    <div class="image">
+                        @Html.Partial("_AvartaDetails", DoAn_ShopOnline.Models.BUS.ShopOnlineBUS.LoadAvartaImg(item.MaSanPham.ToString()))
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="caption">
+                        @Html.Partial("_GioHang", DoAn_ShopOnline.Models.BUS.ShopOnlineBUS.ChiTiet(item.MaSanPham.ToString()))
+                        <label1>Số lượng : </label1> <span>@item.SoLuong</span> <br />
+                        <span>Tổng tiền : @item.TongTien</span>
+                        <hr>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    }*@
+<body1>
+    <div class="row1">
+        <div class="col-751">
+            <div class="container1">
+                <form action="~/ThanhToan/Them" method="post">
+                    <div class="row1">
+                        <div class="col-501">
+                            <h3>Thông Tin Đặt Hàng</h3>
+                            <label1 for="fname"><i class="fa fa-user"></i> Họ Tên</label1>
+                            <input type="text" id="fname" maxlength="50" placeholder="Nguyễn Văn A" required name="nguoinhan" />
+                            <label1 for="sdt"><i class="fa fa-envelope"></i> Số Điện Thoại</label1>
+                            <input type="text" id="sdt" maxlength="12" placeholder="0953762876" required name="sdt" />
+                            <label1 for="adr"><i class="fa fa-address-card-o"></i> Địa Chỉ</label1>
+                            <input type="text" id="adr" maxlength="100" placeholder="Quận 10, Hồ Chí Minh, Việt Nam" required name="diachi" />
+                            <input style="text-align:center" type="submit" value="Đặt hàng" class="btn1">
+                        </div>
+                    </div>
+                    <a href="@Url.Action("CheckOut_Success","ThanhToan")">
+                </form>
+            </div>
+        </div>
+        <div class="col-251">
+            <div class="container1">
+                <h4>Giỏ Hàng <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i></span></h4>
+                @foreach (var item in Model)
+                {
+                    <div class="caption">
+                        @Html.Partial("_GioHang", DoAn_ShopOnline.Models.BUS.ShopOnlineBUS.ChiTiet(item.MaSanPham.ToString()))
+                        Số lượng : @item.SoLuong<br />
+                        <span>Tổng tiền : @item.TongTien</span>
+                        <hr>
+                    </div>
+                    <div class="clear"></div>
+                }
+                <span style="font-size:25px; padding-top:50px;color:black;">Tổng tiền : @ViewBag.TongTien VNĐ</span>
+            </div>
+            
+        </div>
+    </div>
+</body1>
